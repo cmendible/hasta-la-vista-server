@@ -10,7 +10,7 @@ namespace AzureFunctions
 
     public class HttpTrigger
     {
-        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
+        public static async Task<HttpResponseMessage> GenerateQR(HttpRequestMessage req, TraceWriter log)
         {
             log.Info("Entering function");
 

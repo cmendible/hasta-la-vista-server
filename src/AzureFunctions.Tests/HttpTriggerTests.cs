@@ -22,7 +22,7 @@ namespace AzureFunctions.Tests
             var traceWriter = GetTestTraceWriter();
 
             //act
-            var response = await HttpTrigger.Run(request, traceWriter);
+            var response = await HttpTrigger.GenerateQR(request, traceWriter);
             var svg = await response.Content.ReadAsStringAsync();
 
             //assert
