@@ -4,7 +4,6 @@ namespace AzureFunctions
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
-    // using Microsoft.Azure.WebJobs.Host;
     using Newtonsoft.Json;
     using QRCodeCore;
 
@@ -12,13 +11,9 @@ namespace AzureFunctions
     {
         public static async Task<HttpResponseMessage> GenerateQR(HttpRequestMessage req)
         {
-            // log.Info("Entering function");
-
             // Read the json request.
             var qrRequestJson = await req.Content.ReadAsStringAsync();
             var qrRequest = JsonConvert.DeserializeObject<SimpleVCardRequest>(qrRequestJson);
-
-            // log.Info("Request was deserialized");
 
             // Create the vCard string
             var vCard = "BEGIN:VCARD\n";
@@ -26,18 +21,12 @@ namespace AzureFunctions
             vCard += $"TEL;WORK;VOICE:{qrRequest.Phone}\n";
             vCard += "END:VCARD";
 
-            // log.Info("vCard was created");
-
             // Generate de QRCode
             QRCodeData qrCodeData = new QRCodeData(vCard);
             qrCodeData.EccLevel = EccLevel.Q;
 
-            // log.Info("data created");
-
             var generator = new SvgQRCode(qrCodeData);
             var svg = generator.Create(512);
-
-            // log.Info("svg was created");
 
             var response = new HttpResponseMessage()
             {
@@ -45,8 +34,6 @@ namespace AzureFunctions
                 StatusCode = HttpStatusCode.OK,
             };
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/svg+xml");
-
-            // log.Info("sending response");
 
             return response;
         }

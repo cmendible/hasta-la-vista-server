@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
-// using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -14,10 +13,9 @@ namespace AzureFunctions.Tests
         public async void Run_ReturnsSvg()
         {
             //arrange
-            var payload = new { Name = "Carlos Mendible", Phone = "231418" };
+            var payload = new { Name = "Carlos Mendible", Phone = "666666666" };
 
             var request = CreateHttpRequestWith(payload);
-            // var traceWriter = GetTestTraceWriter();
 
             //act
             var response = await HttpTrigger.GenerateQR(request);
@@ -26,11 +24,6 @@ namespace AzureFunctions.Tests
             //assert
             Assert.NotEmpty(svg);
         }
-
-        // private TraceWriter GetTestTraceWriter()
-        // {
-        //     return new TestTraceWriter(System.Diagnostics.TraceLevel.Info);
-        // }
 
         private HttpRequestMessage CreateHttpRequestWith(object jsonObject)
         {
